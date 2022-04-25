@@ -62,7 +62,7 @@ Joint_MCMC_estimate <- function(initial_data_path,initial_data_name,counts_methy
   param_pvalue <- matrix(data = NA, nrow = nrow(initial_beta),ncol = ncol(initial_beta))
   beta1_BF <- vector()
   no_conver_gene <- vector()
-  Rcpp::sourceCpp(system.file("extdata", "sep_ex_mod.rds", package="exomePeak2"))
+  Rcpp::sourceCpp(system.file("extdata", "MCMC_process.cpp", package="exomePeak2"))
   ##parameter estimation for each gene
   for (i in 1:nrow(counts_methy)) {
     y <- as.numeric(as.character(gene_reads[i,]))
