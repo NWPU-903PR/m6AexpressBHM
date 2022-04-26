@@ -1,4 +1,4 @@
-peak_infors <- function(sites_infor,peak_sites_reads){
+peak_infors <- function(peak_sites_infor,peak_sites_reads){
   seqnames <- as.character(peak_sites_infor$chr)
   start <- as.numeric(as.character(peak_sites_infor$chromStart))
   end <-  as.numeric(as.character(peak_sites_infor$chromEnd))
@@ -9,6 +9,6 @@ peak_infors <- function(sites_infor,peak_sites_reads){
   peak_infors <- data.frame(seqnames=seqnames,start=start,end=end,strand=strand,gene_name=gene_name,
                             peak_sites_reads[,-1],log2FoldChange=log2FoldChange,padj=padj)
 
-  peaks_site_infor <- peak_infors
-  return(peaks_site_infor)
+  peaks_site_infors <- peak_infors
+  return(peaks_site_infors)
 }
