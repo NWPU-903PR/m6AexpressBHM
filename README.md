@@ -16,6 +16,8 @@ devtools::install_github("ZhenWei10/m6ALogisticModel")
 ```r
 library(exomePeak2)
 library(m6ALogisticModel)
+GENE_ANNO_GTF = "./hg19_GTF/genes.gtf"
+
 f1 <- "./group1_IP1.bam"
 f2 <- "./group1_IP2.bam"
 f3 <- "./group1_IP3.bam"
@@ -25,7 +27,14 @@ f6 <- "./group1_Input3.bam"
 group1_IP_BAM <- c(f1,f2,f3)
 group1_INPUT_BAM <- c(f4,f5,f6)
 ###peak calling for group1
-
+group1_peak_calling <- peak_calling(IP_BAM=group1_IP_BAM,
+                                    IP_BAM=group1_INPUT_BAM,
+                                    GENE_ANNO_GTF=GENE_ANNO_GTF,
+                                    paired_end = FALSE,
+                                    Genome = "hg19"
+                                    output_dir="./Group1_peakcalling")
+                        
+###Group2 MeRIP-seq data
 fa <- "./group2_IP1.bam"
 fb <- "./group2_IP2.bam"
 fc <- "./group2_IP3.bam"
