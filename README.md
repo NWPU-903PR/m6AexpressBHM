@@ -28,12 +28,12 @@ group1_IP_BAM <- c(f1,f2,f3)
 group1_INPUT_BAM <- c(f4,f5,f6)
 ###peak calling for group1
 group1_peak_calling <- peak_calling(IP_BAM=group1_IP_BAM,
-                                    IP_BAM=group1_INPUT_BAM,
+                                    INPUT_BAM=group1_INPUT_BAM,
                                     GENE_ANNO_GTF=GENE_ANNO_GTF,
                                     paired_end = FALSE,
                                     Genome = "hg19"
                                     output_dir="./Group1_peakcalling")
-                        
+                                                           
 ###Group2 MeRIP-seq data
 fa <- "./group2_IP1.bam"
 fb <- "./group2_IP2.bam"
@@ -44,6 +44,36 @@ ff <- "./group2_Input3.bam"
 group2_IP_BAM <-  c(fa,fb,fc)
 group2_INPUT_BAM <- c(fd,fe,ff)
 ##peak calling for group2
+group2_peak_calling <- peak_calling(IP_BAM=group2_IP_BAM,
+                                    INPUT_BAM=group2_INPUT_BAM,
+                                    GENE_ANNO_GTF=GENE_ANNO_GTF,
+                                    paired_end = FALSE,
+                                    Genome = "hg19"
+                                    output_dir="./Group2_peakcalling")
+                                
+###Group2 MeRIP-seq data
+fA <- "./group3_IP1.bam"
+fB <- "./group3_IP2.bam"
+fC <- "./group3_IP3.bam"
+fD <- "./group3_Input1.bam"
+fE <- "./group3_Input2.bam"
+fF <- "./group3_Input3.bam"
+group2_IP_BAM <-  c(fA,fB,fC)
+group2_INPUT_BAM <- c(fD,fE,fF)
+##peak calling for group3
+group3_peak_calling <- peak_calling(IP_BAM=group3_IP_BAM,
+                                    INPUT_BAM=group3_INPUT_BAM,
+                                    GENE_ANNO_GTF=GENE_ANNO_GTF,
+                                    paired_end = FALSE,
+                                    Genome = "hg19"
+                                    output_dir="./Group3_peakcalling")
+                                    
+##Combine peak sites information and reads count of each peak together 
+##Group1 peak infor
+Group1_peakinfor <- obtain_peakinfor(peak_sites_infor,
+                                      peak_sites_reads)
+
+                                    
 ```
 
 
