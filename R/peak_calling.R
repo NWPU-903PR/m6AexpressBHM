@@ -1,5 +1,5 @@
 peak_calling <- function(IP_BAM,
-                         IP_BAM,
+                         INPUT_BAM,
                         GENE_ANNO_GTF,
                         paired_end = FALSE,
                         Genome = "hg19"
