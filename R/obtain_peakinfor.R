@@ -1,4 +1,4 @@
-peak_infors <- function(peak_sites_infor,peak_sites_reads){
+obtain_peakinfor <- function(peak_sites_infor,peak_sites_reads){
   seqnames <- as.character(peak_sites_infor$chr)
   start <- as.numeric(as.character(peak_sites_infor$chromStart))
   end <-  as.numeric(as.character(peak_sites_infor$chromEnd))
