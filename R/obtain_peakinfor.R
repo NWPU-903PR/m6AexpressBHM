@@ -1,4 +1,8 @@
-obtain_peakinfor <- function(peak_sites_infor,peak_sites_reads){
+obtain_peakinfor <- function(peak_infor_dir){
+  f1 <- paste0(peak_infor_dir,"/","Mod.csv")
+  peak_sites_infor <- read.csv(f1)
+  f2 <- paste0(peak_infor_dir,"/","ADDInfo","/","ADDInfo_ReadsCount.csv")
+  peak_sites_reads <- read.csv(f2)
   seqnames <- as.character(peak_sites_infor$chr)
   start <- as.numeric(as.character(peak_sites_infor$chromStart))
   end <-  as.numeric(as.character(peak_sites_infor$chromEnd))
