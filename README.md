@@ -96,7 +96,14 @@ Group1_peakcenter2stopcondon <- dist_stopcodon(target_peakcenter=Group1_peakcent
 Group2_peakcenter2stopcondon <- dist_stopcodon(target_peakcenter=Group2_peakcenter,annotation_file=GENE_ANNO_GTF)
 Group3_peakcenter2stopcondon <- dist_stopcodon(target_peakcenter=Group3_peakcenter,annotation_file=GENE_ANNO_GTF)
 ## Quantify methylation level weighted by the distance to stop condon
-
+### load library size factor for each group sample
+load("./Group1_peakcalling/size_factor.Rdata")
+Group1_sizefactor <- size_factor
+load("./Group2_peakcalling/size_factor.Rdata")
+Group2_sizefactor <- size_factor
+load("./Group3_peakcalling/size_factor.Rdata")
+Group3_sizefactor <- size_factor
+Group1_methylevel_distdecay  <- gene_methy_level_distdecay()
 ```
 
 
