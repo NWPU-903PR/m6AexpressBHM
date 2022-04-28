@@ -69,12 +69,16 @@ group3_peak_calling <- peak_calling(IP_BAM=group3_IP_BAM,
                                     output_dir="./Group3_peakcalling")
                                     
 ##Combine peak sites information and reads count of each peak together 
-##Group1 peak infor
 Group1_peakinfor <- obtain_peakinfor(peak_infor_dir="./Group1_peakcalling")
 Group2_peakinfor <- obtain_peakinfor(peak_infor_dir="./Group2_peakcalling")
-Group3_peakinfor <- obtain_peakinfor(peak_infor_dir="./Group3_peakcalling")   
+Group3_peakinfor <- obtain_peakinfor(peak_infor_dir="./Group3_peakcalling")  
 
 ```
+## Quantify methylation for each gene in each concerned group
+```r
+
+```
+
 
 
 
