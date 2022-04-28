@@ -16,7 +16,8 @@ map_peak_longTX <- function(filepath,annotation_file,peak_sites_infor){
   exbytx_txdb <- exbytx_txdb[Kept_tx_indx]
   exbytx_txdb <- exbytx_txdb[countOverlaps(exbytx_txdb,exbytx_txdb) == 1]
   ##mapped to the longest transcript
-  a = read.table(filepath,sep="\t",header=FALSE,stringsAsFactors =FALSE)
+  f1 <- paste0(filepath,"/","Mod.bed")
+  a = read.table(f1,sep="\t",header=FALSE,stringsAsFactors =FALSE)
   read_peak <- import(filepath)
   mappeak_to_longtx <-  mapToTranscripts(read_peak, exbytx_txdb,ignore.strand=F)
   select_peak_label <- as.numeric(as.character(mappeak_to_longtx$xHits))
