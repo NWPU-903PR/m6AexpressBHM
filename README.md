@@ -72,10 +72,30 @@ group3_peak_calling <- peak_calling(IP_BAM=group3_IP_BAM,
 Group1_peakinfor <- obtain_peakinfor(peak_infor_dir="./Group1_peakcalling")
 Group2_peakinfor <- obtain_peakinfor(peak_infor_dir="./Group2_peakcalling")
 Group3_peakinfor <- obtain_peakinfor(peak_infor_dir="./Group3_peakcalling")  
+## To avoid isoform ambiguity, we selected m6A peak sites mapped to the longest transcript of each gene
+Group1_mappeak_LTX <- map_peak_longTX(filepath="./Group1_peakcalling"
+                                     annotation_file=GENE_ANNO_GTF,
+                                     peak_sites_infor=Group1_peakinfor)
+                                     
+Group2_mappeak_LTX <- map_peak_longTX(filepath="./Group2_peakcalling"
+                                     annotation_file=GENE_ANNO_GTF,
+                                     peak_sites_infor=Group2_peakinfor)
 
+Group3_mappeak_LTX <- map_peak_longTX(filepath="./Group3_peakcalling"
+                                     annotation_file=GENE_ANNO_GTF,
+                                     peak_sites_infor=Group3_peakinfor)
 ```
 ## Quantify methylation for each gene in each concerned group
 ```r
+## Find the peak center,which was used to quantify the distance to stop codon
+Group1_peakcenter <- findpeakcenter(targetpeaks=Group1_peakinfor,annotation_file=GENE_ANNO_GTF,maplongtx_peak=Group1_mappeak_LTX)
+Group2_peakcenter <- findpeakcenter(targetpeaks=Group2_peakinfor,annotation_file=GENE_ANNO_GTF,maplongtx_peak=Group2_mappeak_LTX)
+Group3_peakcenter <- findpeakcenter(targetpeaks=Group3_peakinfor,annotation_file=GENE_ANNO_GTF,maplongtx_peak=Group3_mappeak_LTX)
+## Obtain the distance of peak center to stop condon
+Group1_peakcenter2stopcondon <- dist_stopcodon(target_peakcenter=Group1_peakcenter,annotation_file=GENE_ANNO_GTF)
+Group2_peakcenter2stopcondon <- dist_stopcodon(target_peakcenter=Group2_peakcenter,annotation_file=GENE_ANNO_GTF)
+Group3_peakcenter2stopcondon <- dist_stopcodon(target_peakcenter=Group3_peakcenter,annotation_file=GENE_ANNO_GTF)
+## Quantify methylation level weighted by the distance to stop condon
 
 ```
 
