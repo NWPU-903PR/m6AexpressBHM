@@ -1,4 +1,4 @@
-gene_gene_methy_level_distdecay <- function(methy_site_infor,size_factor,peak_dist_stopcodon){
+gene_methy_level_distdecay <- function(methy_site_infor,size_factor,peak_dist_stopcodon){
   size_factor <- as.numeric(as.character(size_factor))
   colnames(methy_site_infor)[6:(ncol(methy_site_infor)-2)] <- c(paste0("IP",1:2),paste0("Input",1:2)) 
   nonbindgene_peak_GR <- GRanges(seqnames = as.character(methy_site_infor$seqnames),
