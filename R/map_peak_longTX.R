@@ -61,8 +61,33 @@ map_peak_longTX <- function(filepath,annotation_file,peak_sites_infor){
   # generate GRangesList
   tx <- exonsBy(peaks, "tx",use.names=TRUE)
   mcols(tx) <- a
+  # select mapped longest transcirpt gene peak sites
+  map_peak_GR <- tx[countOverlaps(tx,tx,type = "equal")==1]
+  consis_GR <- GRanges(seqnames = as.character(peak_sites_infor$seqnames),
+                       IRanges(start = as.numeric(as.character(peak_sites_infor$start)),
+                               end = as.numeric(as.character(peak_sites_infor$end))),
+                               strand = as.character(peak_sites_infor$strand),
+                               gene_name=peak_sites_infor$gene_name)
   
-  return(tx)
+  new_consis_peak <- data.frame()
+  rm_label <- vector()
+  for (i in 1:length(map_peak_GR)) {
+    start_tr <- findOverlaps(consis_GR,map_peak_GR[i],type = "start")
+    end_tr <- findOverlaps(consis_GR,map_peak_GR[i],type = "end")
+    consis_tr <- intersect(unique(start_tr@from),unique(end_tr@from))
+    if(length(consis_tr)==0){
+      rm_label[i] <- i
+    }
+    if(length(consis_tr)>0){
+      rm_label[i] <- 0
+    }
+    one_peak <- consis_peak_infor[consis_tr,]
+    # mcols(consis_peak_GR[i]) <- data.frame(mcols(consis_peak_GR[i]),gene_name=as.character(one_peak$gene_name))
+    new_consis_peak <- rbind(new_consis_peak, one_peak)
+  }
+  peak_maplongTX_infor <- list(mapped_peakGRList=tx,
+                               mapped_peankinfor=new_consis_peak)
+  return(peak_maplongTX_infor)
 }
 
 .combineListOfSplicing <- function(t){
