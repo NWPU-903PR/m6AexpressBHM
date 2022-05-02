@@ -1,5 +1,5 @@
 ###########obtain peak center
-findpeakcenter <- function(targetpeaks,annotation_file,maplongtx_peak){
+findpeakcenter <- function(annotation_file,maplongTX_peak){
   ##get the longest transcript
   txdbfile <- GenomicFeatures::makeTxDbFromGFF(annotation_file)
   exbytx_txdb <- exonsBy(txdbfile,by = "tx")
@@ -14,6 +14,9 @@ findpeakcenter <- function(targetpeaks,annotation_file,maplongtx_peak){
   exbytx_txdb <- exbytx_txdb[Kept_tx_indx]
   exbytx_txdb <- exbytx_txdb[countOverlaps(exbytx_txdb,exbytx_txdb) == 1]
   ####
+  targetpeaks <- maplongTX_peak$mapped_peankinfor
+  maplongtx_peak <- maplongTX_peak$mapped_peakGRList
+  #####
   targetpeak_GRlist <- .get_GRList(target_peak=targetpeaks,allpeak_GR=maplongtx_peak)
   targetpeak_center <- data.frame()
   txdbfiles <- exbytx_txdb
