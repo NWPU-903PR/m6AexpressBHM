@@ -103,7 +103,20 @@ load("./Group2_peakcalling/size_factor.Rdata")
 Group2_sizefactor <- size_factor
 load("./Group3_peakcalling/size_factor.Rdata")
 Group3_sizefactor <- size_factor
-Group1_methylevel_distdecay  <- gene_methy_level_distdecay()
+Group1_methylevel_distdecay <- gene_methy_level_distdecay(mapLTX_peakinfor=Group1_mappeak_LTX,
+                                                          peak_dist_stopcodon=Group1_peakcenter2stopcondon,
+                                                          size_factor=Group1_sizefactor)
+                                                          
+Group2_methylevel_distdecay <- gene_methy_level_distdecay(mapLTX_peakinfor=Group2_mappeak_LTX,
+                                                          peak_dist_stopcodon=Group2_peakcenter2stopcondon,
+                                                          size_factor=Group2_sizefactor)
+                                                          
+Group2_methylevel_distdecay <- gene_methy_level_distdecay(mapLTX_peakinfor=Group3_mappeak_LTX,
+                                                          peak_dist_stopcodon=Group3_peakcenter2stopcondon,
+                                                          size_factor=Group3_sizefactor)
+                                                          
+ ###select candidate genes with Differential methylation genes
+                                                          
 ```
 
 
