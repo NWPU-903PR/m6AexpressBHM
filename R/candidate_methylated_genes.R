@@ -29,10 +29,16 @@ if(method=="MAD"){
   within_group_methy <- t(within_group_methy)
   rownames(within_group_methy) <- consis_gene
   colnames(within_group_methy) <- paste0("Group",1:Group_num,"_methy")
-  methy_mean<- round(apply(within_group_methy, 1, mean),4) 
-  methy_sd <- round(apply(within_group_methy, 1, sd),4)
-  
-  
+  #methy_mean<- round(apply(within_group_methy, 1, mean),4) 
+  #methy_sd <- round(apply(within_group_methy, 1, sd),4)
+  methy_median <- apply(within_group_methy, 1, median)
+  median_sd <- vector()
+ for(i in 1:nrow(within_group_methy)){
+   median_sd[i] <- median(abs(as.numeric(as.character(within_group_methy[i,])) - methy_median[i]))
+ }
+ MAD <- median_sd
+ names(MAD) <- rownames(within_group_methy)
+ 
 }
 
 }
