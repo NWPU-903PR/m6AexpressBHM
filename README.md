@@ -115,7 +115,9 @@ Group2_methylevel_distdecay <- gene_methy_level_distdecay(mapLTX_peakinfor=Group
                                                           peak_dist_stopcodon=Group3_peakcenter2stopcondon,
                                                           size_factor=Group3_sizefactor)
                                                           
- ###select candidate genes with Differential methylation genes
+###select candidate genes with high variable methylation genes (e.g. MAD>0.3)
+Group_methylation
+select_candidate_genes <- candidate_genes(group_methylation=,method="MAD")
                                                           
 ```
 
