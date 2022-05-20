@@ -40,11 +40,18 @@ if(method=="MAD"){
  names(MAD) <- rownames(within_group_methy)
  select_genes <- names(MAD)[which(MAD>0.3)]
  candidate_gene_methy <- consis_genemethy[rownames(consis_genemethy)%in%select_genes,]
- return(candidate_gene_methy)
 }
 if(method=="DM"){
-control_group <- consis_gene_methy[,grep(Group_name,colnames(consis_genemethy))]
-design <- data.frame(Grp1=1,Grp2vs1=c(rep(0,3*1),rep(1,3*4)))
+control_group <- consis_genemethy[,grep("Group1",colnames(consis_genemethy))]
+design <- data.frame(Grp1=1,Grp2vs1=c(rep(0,ncol(control_group)*1),rep(1,(ncol(consis_genemethy)-ncol(control_group)))))
+y <- consis_genemethy
+# dupcor <- duplicateCorrelation(y,design,block=block)
+fit1 <- lmFit(y,design)
+fit1 <- eBayes(fit1)
+diff_result <- topTable(fit1,coef = 2,number = nrow(y),genelist = as.character(rownames(consis_genemethy)))
+DM_gene <- diff_result[diff_result$P.Value<0.05,]
+DM_genename <- as.character(DM_gene$ID)
+candidate_gene_methy <-  consis_genemethy[rownames(consis_genemethy)%in%DM_genename,]
 }
-
+return(candidate_gene_methy)
 }
