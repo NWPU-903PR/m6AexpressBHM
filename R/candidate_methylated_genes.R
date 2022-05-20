@@ -18,5 +18,21 @@ for (i in 1:Group_num) {
  consis_gene_methy[[i]] <- onedata_consisgenemethy
 }
 consis_genemethy <- do.call("cbind",consis_gene_methy)
+if(method=="MAD"){
+  within_group_methy <- data.frame()
+  for (i in 1:Group_num) {
+    Group_name <- paste0("Group",i)
+    onegroup_methy <- consis_genemethy[,grep(Group_name,colnames(consis_genemethy ))]
+    onecase_methy <- apply(onegroup_methy, 1, mean)
+    within_group_methy <- rbind(within_group_methy,onecase_methy)
+  }
+  within_group_methy <- t(within_group_methy)
+  rownames(within_group_methy) <- consis_gene
+  colnames(within_group_methy) <- paste0("Group",1:Group_num,"_methy")
+  methy_mean<- round(apply(within_group_methy, 1, mean),4) 
+  methy_sd <- round(apply(within_group_methy, 1, sd),4)
+  
+  
+}
 
 }
