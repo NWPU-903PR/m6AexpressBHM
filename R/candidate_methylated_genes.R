@@ -38,7 +38,9 @@ if(method=="MAD"){
  }
  MAD <- median_sd
  names(MAD) <- rownames(within_group_methy)
- 
+ select_genes <- names(MAD)[which(MAD>0.3)]
+ candidate_gene_methy <- consis_genemethy[rownames(consis_genemethy)%in%select_genes,]
+ return(candidate_gene_methy)
 }
 
 }
