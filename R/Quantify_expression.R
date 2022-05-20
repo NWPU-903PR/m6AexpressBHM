@@ -7,7 +7,13 @@ countMatrix <- sapply(as.matrix(counts_data), as.numeric)
 countmatrixgene <- matrix(countMatrix, nrow=nrow(counts_data), ncol = ncol(counts_data))
 colnames(countmatrixgene) <- colnames(counts_data)
 rownames(countmatrixgene) <- rownames(counts_data)
-return(countmatrixgene)  
+conds <- factor(colnames(counts_data))
+cds <- newCountDataSet(countmatrixgene, conds )
+size_factor <-  sizeFactors(estimateSizeFactors(cds)) 
+
+gene_expression_infor <- list(gene_express=countmatrixgene,
+                              size_factor=size_factor)
+return(gene_expression_infor)  
 }
 
   
