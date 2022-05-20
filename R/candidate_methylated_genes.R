@@ -1,5 +1,6 @@
 candidate_methylated_genes <- function(group_methylation,method){
 Group_num <- length(group_methylation)
+Rep_num <- vector()
 gene_names <- list()
 for(i in 1:Group_num){
  gene_names[[i]] <- as.character(group_methylation[[i]]$gene_name)
@@ -8,6 +9,7 @@ consis_gene  <- Reduce(intersect, gene_names)
 consis_gene_methy <- list()
 for (i in 1:Group_num) {
   one_genemethy <- Group_methylation[[i]]
+  Rep_num[i] <- ncol(one_genemethy[,-1])
   onedata_consisgenemethy <- data.frame()
   for (j in 1:length(consis_gene)) {
     oneconsis_genemethy <- one_genemethy[one_genemethy$gene_name==consis_gene[j],-1]
@@ -53,5 +55,29 @@ DM_gene <- diff_result[diff_result$P.Value<0.05,]
 DM_genename <- as.character(DM_gene$ID)
 candidate_gene_methy <-  consis_genemethy[rownames(consis_genemethy)%in%DM_genename,]
 }
+if(method=="longitudinal methylation"){
+  methy_level_infor <- list()
+  for(i in 1:nrow(consis_genemethy)){
+   one_genemethy <- consis_genemethy[i,]
+   time_point <- rep(1:Group_num,Rep_num)
+   one_gene_methylinfor <- data.frame(methylevel=one_genemethy,
+                                      timepoint=time_point,
+                                      Subject=rep_num)
+   methy_level_infor[[i]] <- one_gene_methylinfor
+   names(methy_level_infor[i]) <- rownames(consis_genemethy)[i]
+  }
+time_cor_gene_label <- vector()
+for (i in 1:length(methy_level_infor)) {
+  suppressMessages(fm1 <- lmerTest::lmer( methylevel  ~ time_point + ( 1 | Subject  ), methy_level_infor[[i]] ))
+  suppressMessages(fm0 <- lmerTest::lmer( methylevel  ~ ( 1 | Subject  ), methy_level_infor[[i]] ))
+  kr.h <- KRmodcomp(fm1, fm0)
+  if(unique(kr.h$test$p.value<0.05)){
+    time_cor_gene_label[i] <- 1
+  }else{
+    time_cor_gene_label[i] <- 0
+  }
+}
+candidate_gene_methy <- consis_genemethy[which(time_cor_gene_label==1),] 
+} 
 return(candidate_gene_methy)
 }
