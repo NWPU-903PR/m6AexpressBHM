@@ -1,10 +1,10 @@
-Joint_MCMC_estimate <- function(initial_data_path,initial_data_name,counts_methy_path,
-                                counts_methy_name,log_offset,it_num,num_group,ar_lower,ar_up,
+Joint_MCMC_estimate <- function(initial_parameters_infor,gene_expre_methy,
+                                log_offset,it_num,num_group,ar_lower,ar_up,
                                 geweke_pvalue,prop_burn,MCMC_output_path,MCMC_output_name){
   
-  load(paste0(initial_data_path,initial_data_name))
-  beta_infor <- output_data[[2]]
-  b0_infor <- output_data[[1]]
+  #load(paste0(initial_data_path,initial_data_name))
+  beta_infor <- initial_parameters_infor$coeff_infor 
+  b0_infor <- initial_parameters_infor$b_infor
   initial_sigma2 <- as.numeric(as.character(b0_infor$variance_b0))
   initial_beta <- beta_infor[,1:2]
   initial_alpha <- as.numeric(as.character(beta_infor$alpha))
@@ -13,16 +13,16 @@ Joint_MCMC_estimate <- function(initial_data_path,initial_data_name,counts_methy
   initial_b0 <- matrix(initial_b0, nrow=nrow(initial_b0s), ncol = ncol(initial_b0s))
   colnames(initial_b0) <- colnames(initial_b0s)
   initial_b0 <- as.data.frame(initial_b0)
-  fa <-  paste0(counts_methy_path,counts_methy_name)
-  gene_count_methy <- read.table(fa,header = T)
+  #fa <-  paste0(counts_methy_path,counts_methy_name)
+  gene_count_methy <-gene_expre_methy
   gene_name <- (as.character(output_data[[3]]))
   counts_methy <- data.frame()
   for (k in 1:length(gene_name)) {
-    one_select <- gene_count_methy[which(!is.na(match(as.character(gene_count_methy$gene_name),as.character(gene_name[k])))),]
+    one_select <- gene_count_methy[which(!is.na(match(rownames(gene_count_methy),as.character(gene_name[k])))),]
     counts_methy <- rbind(counts_methy,one_select)
   }
-  gene_reads <- counts_methy[,2:((ncol(counts_methy)+1)/2)]
-  methy_level <- counts_methy[,(((ncol(counts_methy)+1)/2)+1):(ncol(counts_methy))]
+  gene_reads <- counts_methy[,1:(ncol(counts_methy)/2)]
+  methy_level <- counts_methy[,((ncol(counts_methy)/2)+1):(ncol(counts_methy))]
   groups <- rep((1:num_group),rep((ncol(gene_reads)/num_group),num_group))
   
   ##estimate parmater prior 
@@ -41,7 +41,7 @@ Joint_MCMC_estimate <- function(initial_data_path,initial_data_name,counts_methy
   # select_beta1 <- beta[(beta>beta1_lower)&(beta<beta1_up)]
   # beta_mean <- c(round(mean(select_beta0),3),0)
   # beta_sd <- c(round(sd(select_beta0),3),round(sd(select_beta1),3))
-  beta_mean <- c(round(mean(intersecpt),3),round(mean(beta),3))
+  beta_mean <- c(round(mean(intersecpt),3),0)
   beta_sd <- c(round(sd(intersecpt),3),round(sd(beta)*2,3))
   ##alpha prior
   disp_fitted_value <- disp_fitted(raw_alpha=initial_alpha,gene_reads=gene_reads,numCoef=ncol(initial_beta),numSample=ncol(gene_reads))
