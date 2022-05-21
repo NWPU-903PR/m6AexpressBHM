@@ -73,15 +73,15 @@ Group1_peakinfor <- obtain_peakinfor(peak_infor_dir="./Group1_peakcalling")
 Group2_peakinfor <- obtain_peakinfor(peak_infor_dir="./Group2_peakcalling")
 Group3_peakinfor <- obtain_peakinfor(peak_infor_dir="./Group3_peakcalling")  
 ## To avoid isoform ambiguity, we selected m6A peak sites mapped to the longest transcript of each gene
-Group1_mappeak_LTX <- map_peak_longTX(filepath="./Group1_peakcalling"
+Group1_mappeak_LTX <- map_peak_longTX(filepath="./Group1_peakcalling",
                                      annotation_file=GENE_ANNO_GTF,
                                      peak_sites_infor=Group1_peakinfor)
                                      
-Group2_mappeak_LTX <- map_peak_longTX(filepath="./Group2_peakcalling"
+Group2_mappeak_LTX <- map_peak_longTX(filepath="./Group2_peakcalling",
                                      annotation_file=GENE_ANNO_GTF,
                                      peak_sites_infor=Group2_peakinfor)
 
-Group3_mappeak_LTX <- map_peak_longTX(filepath="./Group3_peakcalling"
+Group3_mappeak_LTX <- map_peak_longTX(filepath="./Group3_peakcalling",
                                      annotation_file=GENE_ANNO_GTF,
                                      peak_sites_infor=Group3_peakinfor)
 ```
