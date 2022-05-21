@@ -1,7 +1,7 @@
 ##Match gene expression and methylation level for candidate genes
 match_expr_methy <- function(gene_express_data,gene_methy){
-gene_express <- gene_express_data[[1]]
-express_sizefactor <- gene_express_data[[2]]
+gene_express <- gene_express_data$gene_express
+express_sizefactor <- gene_express_data$size_factor
 full_expression <- apply(gene_express,1,sum)
 select_label <- which(full_expression>10)
 full_expr_gene <- gene_express[select_label,]
