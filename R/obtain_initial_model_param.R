@@ -1,13 +1,13 @@
-initial_parameters <- function(input_data_path,input_data_name,output_path,output_name,num_group,size_factor){
-  fa <- paste0(input_data_path,input_data_name)
-  gene_count_methy <- read.table(fa,header = T)
-  
-  gene_reads <- gene_count_methy[,2:((ncol(gene_count_methy)+1)/2)]
-  select_gene <- which(apply(gene_reads, 1, mean)>10)
-  select_counts_methy <- gene_count_methy[select_gene,]
-  gene_name <- as.character(select_counts_methy$gene_name)
+initial_parameters <- function(gene_expre_methy,output_path,output_name,num_group,size_factor){
+
+  gene_count_methy <- gene_expre_methy
+  #gene_reads <- gene_count_methy[,2:((ncol(gene_count_methy)+1)/2)]
+  #select_gene <- which(apply(gene_reads, 1, mean)>10)
+  #select_counts_methy <- gene_count_methy[select_gene,]
+  gene_name <- as.character(rownames(gene_count_methy))
+  select_counts_methy <- data.frame(gene_name=gene_name,gene_count_methy)
   # select_counts_methy <- gene_count_methy
-  cl<- makeCluster(detectCores()-28)      
+  cl<- makeCluster(detectCores()-4)      
   registerDoParallel(cl) 
   suppressMessages(suppressWarnings(glmmtmb_results<-foreach(i=1:nrow(select_counts_methy),.combine = rbind,.packages = "glmmTMB") %dopar% {
     one_genecount <- as.numeric(select_counts_methy[i,2:((ncol(select_counts_methy)+1)/2)])
@@ -42,7 +42,7 @@ initial_parameters <- function(input_data_path,input_data_name,output_path,outpu
                                  paste0("b0_",1:num_group),"variance_b0")
   rownames(glmmtmb_results) <- NULL
   glmmtmb_results <- as.data.frame(glmmtmb_results)
-  writexl::write_xlsx(glmmtmb_results,paste0(output_path,"glmmtmb_result_peaklevel.xlsx"))
+  #writexl::write_xlsx(glmmtmb_results,paste0(output_path,"glmmtmb_result_peaklevel.xlsx"))
   # return(glmmtmb_results)
   select_genelabel <- glmmtmb_results$gene_name
   select_genes <-as.character(select_genelabel)
@@ -52,6 +52,8 @@ initial_parameters <- function(input_data_path,input_data_name,output_path,outpu
   select_b_infor <- b_infor[select_label,]
   select_coefinfor <- coef_infor[select_label,]
   select_gene_name <- (select_genes[select_label])
-  output_data <- list(select_b_infor,select_coefinfor,select_gene_name)
+  output_data <- list(b_infor=select_b_infor,
+                      coeff_infor = select_coefinfor,
+                      gene_name = select_gene_name)
   save(output_data,file = paste0(output_path, output_name))
 }
