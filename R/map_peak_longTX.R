@@ -81,7 +81,7 @@ map_peak_longTX <- function(filepath,annotation_file,peak_sites_infor){
     if(length(consis_tr)>0){
       rm_label[i] <- 0
     }
-    one_peak <- consis_peak_infor[consis_tr,]
+    one_peak <- peak_sites_infor[consis_tr,]
     # mcols(consis_peak_GR[i]) <- data.frame(mcols(consis_peak_GR[i]),gene_name=as.character(one_peak$gene_name))
     new_consis_peak <- rbind(new_consis_peak, one_peak)
   }
