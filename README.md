@@ -126,12 +126,15 @@ Input_data <- c(group1_INPUT_BAM,group2_INPUT_BAM,group3_INPUT_BAM)
 gene_expression <- obtain_gene_expression(Input_data=Input_data, GTF_file=GENE_ANNO_GTF, nthreads=20, isPairedEnd=F)
 ### Match expression and methylation genes
 gene_expr_methy <- match_expr_methy(gene_express_data=gene_expression,gene_methy=select_methylated_genes)
-
-```
-
-
-
-
-
-
+### Obtain initial model parameters
+gene_reads_methy <- gene_expr_methy$gene_expr_methy
+size_factor <- gene_expr_methy$library_sizefactor
+initial_model_param <- initial_parameters(gene_expre_methy=gene_reads_methy,
+                                          num_group=3,size_factor=size_factor)
+### Joint estimate model parameters by MCMC process
+obtain_model_params <- Joint_MCMC_estimate(initial_parameters_infor=initial_model_param,
+                                           gene_expre_methy=gene_reads_methy,
+                                           size_factor=size_factor,it_num=10000,num_group=3,
+                                           ar_lower=0.2,ar_up=0.7,geweke_pvalue=0.05,prop_burn=0.2,
+                                          MCMC_output_path="./output/",MCMC_output_name="model_parameters")
 ```
