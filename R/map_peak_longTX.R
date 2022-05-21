@@ -29,7 +29,7 @@ map_peak_longTX <- function(filepath,annotation_file,peak_sites_infor){
   # mcols_info =a[,13:length(a[1,])]
   a = a[last_select_label,1:12]
   #############
-  start_overlap_label <- which(!is.na(match(((a$V2)+1),peak_sites_infor$start)))
+  start_overlap_label <- which(!is.na(match(((a$V2)),peak_sites_infor$start)))
   a = a[start_overlap_label,]
   #################
   # get transcripts
@@ -64,10 +64,10 @@ map_peak_longTX <- function(filepath,annotation_file,peak_sites_infor){
   # select mapped longest transcirpt gene peak sites
   map_peak_GR <- tx[countOverlaps(tx,tx,type = "equal")==1]
   consis_GR <- GRanges(seqnames = as.character(peak_sites_infor$seqnames),
-                       IRanges(start = as.numeric(as.character(peak_sites_infor$start)),
+                       IRanges(start = as.numeric(as.character(peak_sites_infor$start))+1,
                                end = as.numeric(as.character(peak_sites_infor$end))),
-                               strand = as.character(peak_sites_infor$strand),
-                               gene_name=peak_sites_infor$gene_name)
+                       strand = as.character(peak_sites_infor$strand),
+                       gene_name=peak_sites_infor$gene_name)
   
   new_consis_peak <- data.frame()
   rm_label <- vector()
