@@ -115,23 +115,32 @@ Group2_methylevel_distdecay <- gene_methy_level_distdecay(mapLTX_peakinfor=Group
                                                           peak_dist_stopcodon=Group3_peakcenter2stopcondon,
                                                           size_factor=Group3_sizefactor)
                                                           
+```
+## Select candidate genes
+```r                                                          
 ###select candidate methylated genes with high variable methylation genes (e.g. MAD>0.3)
 Group_methylation <- list(Group1_methy=Group1_methylevel_distdecay,
                           Group2_methy=Group2_methylevel_distdecay,
                           Group3_methy=Group3_methylevel_distdecay)
 select_methylated_genes <- candidate_methylated_genes(group_methylation=Group_methylation,method="MAD")
-
-### Quantify gene expression 
+```
+### Match expression and methylation for candidate genes
+```r 
+### obtain gene reads count from Input dataset in BAM format
 Input_data <- c(group1_INPUT_BAM,group2_INPUT_BAM,group3_INPUT_BAM)
 gene_expression <- obtain_gene_expression(Input_data=Input_data, GTF_file=GENE_ANNO_GTF, nthreads=20, isPairedEnd=F)
 ### Match expression and methylation genes
 gene_expr_methy <- match_expr_methy(gene_express_data=gene_expression,gene_methy=select_methylated_genes)
-### Obtain initial model parameters
+```
+## Obtain initial model parameters
+```r
 gene_reads_methy <- gene_expr_methy$gene_expr_methy
 size_factor <- gene_expr_methy$library_sizefactor
 initial_model_param <- initial_parameters(gene_expre_methy=gene_reads_methy,
                                           num_group=3,size_factor=size_factor)
-### Joint estimate model parameters by MCMC process
+```
+## Joint estimate model parameters by MCMC process
+```r
 obtain_model_params <- Joint_MCMC_estimate(initial_parameters_infor=initial_model_param,
                                            gene_expre_methy=gene_reads_methy,
                                            size_factor=size_factor,it_num=10000,num_group=3,
