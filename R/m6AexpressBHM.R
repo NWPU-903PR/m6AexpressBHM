@@ -1,5 +1,5 @@
 Joint_MCMC_estimate <- function(initial_parameters_infor,gene_expre_methy,
-                                log_offset,it_num,num_group,ar_lower,ar_up,
+                                size_factor,it_num,num_group,ar_lower,ar_up,
                                 geweke_pvalue,prop_burn,MCMC_output_path,MCMC_output_name){
   
   #load(paste0(initial_data_path,initial_data_name))
@@ -81,6 +81,7 @@ Joint_MCMC_estimate <- function(initial_parameters_infor,gene_expre_methy,
     log_dispersion_fit <- as.numeric(log_disp_fit[i])
     sdtune0 <- 1.0
     sdtune1 <- 1.0
+    log_offset <- size_factor
     ##M-H MCMC to estimated parameter
     allparm_MCMC <- MH_MC_iter(counts=y,
                                kX,
