@@ -1,4 +1,4 @@
-initial_parameters <- function(gene_expre_methy,output_path,output_name,num_group,size_factor){
+initial_parameters <- function(gene_expre_methy,num_group,size_factor){
 
   gene_count_methy <- gene_expre_methy
   #gene_reads <- gene_count_methy[,2:((ncol(gene_count_methy)+1)/2)]
@@ -55,5 +55,6 @@ initial_parameters <- function(gene_expre_methy,output_path,output_name,num_grou
   output_data <- list(b_infor=select_b_infor,
                       coeff_infor = select_coefinfor,
                       gene_name = select_gene_name)
-  save(output_data,file = paste0(output_path, output_name))
+  #save(output_data,file = paste0(output_path, output_name))
+  return(output_data)
 }
