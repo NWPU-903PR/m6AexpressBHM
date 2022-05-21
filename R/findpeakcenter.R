@@ -76,8 +76,9 @@ findpeakcenter <- function(annotation_file,maplongTX_peak){
     select_peaks <- rbind(select_peaks,onepeak)
     
   }
+  ####
   select_peakGR <- GRanges(seqnames = as.character(select_peaks$seqnames),
-                           IRanges(start = as.numeric(as.character(select_peaks$start)),
+                           IRanges(start = (as.numeric(as.character(select_peaks$start))-1),
                                    end = as.numeric(as.character(select_peaks$end))),
                            strand = as.character(select_peaks$strand))
   select_peakGR$exon_id <- as.numeric(as.character(select_peaks$exon_id))
