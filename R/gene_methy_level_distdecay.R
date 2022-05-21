@@ -1,8 +1,8 @@
 gene_methy_level_distdecay <- function(mapLTX_peakinfor,size_factor,peak_dist_stopcodon){
   size_factor <- as.numeric(as.character(size_factor))
   methy_site_infor <- mapLTX_peakinfor$mapped_peankinfor
-  colnames(methy_site_infor)[6:(ncol(methy_site_infor)-2)] <- c(paste0("IP",1:length(6:(ncol(methy_site_infor)-2))/2),
-                                                                paste0("Input",1:length(6:(ncol(methy_site_infor)-2))/2))) 
+  colnames(methy_site_infor)[6:(ncol(methy_site_infor)-2)] <- c(paste0("IP",1:(length(6:(ncol(methy_site_infor)-2))/2)),
+                                                                paste0("Input",1:(length(6:(ncol(methy_site_infor)-2))/2))) 
   nonbindgene_peak_GR <- GRanges(seqnames = as.character(methy_site_infor$seqnames),
                                           IRanges(start = as.numeric(as.character(methy_site_infor$start)),
                                                   end = as.numeric(as.character(methy_site_infor$end))),
