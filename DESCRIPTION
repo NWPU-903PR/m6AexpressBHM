@@ -9,7 +9,7 @@ Description: The package is designed to predict the m6A methylation regulated ex
 License: GPL-2
 Encoding: UTF-8
 BuildVignettes: yes
-Depends: exomePeak2, DESeq2, reshape2, gdata, rtracklayer,stringr, Rsubread, stringi,
+Depends: exomePeak2, DESeq2, reshape2, gdata, rtracklayer,stringr, Rsubread, stringi,Rcpp,RcppArmadillo,
          readr, SummarizedExperiment, aod, writexl,m6ALogisticModel,lmerTest,pbkrtest,glmmTMB,
           ggplot2, grid, GenomicFeatures, GenomicRanges,AnnotationDbi, limma,doParallel,parallel,coda,extraDistr
           GenomicAlignments,S4Vectors, scales,MLmetrics,robustbase,mvtnorm
