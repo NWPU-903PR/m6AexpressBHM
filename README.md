@@ -145,8 +145,8 @@ gene_expr_methy <- match_expr_methy(gene_express_data=gene_expression,gene_methy
 ```r
 gene_reads_methy <- gene_expr_methy$gene_expr_methy
 size_factor <- gene_expr_methy$library_sizefactor
-initial_model_param <- initial_parameters(gene_expre_methy=gene_reads_methy,
-                                          num_group=3,size_factor=size_factor)
+initial_model_param <- obtain_initial_parameters(gene_expre_methy=gene_reads_methy,
+                                                 num_group=3,size_factor=size_factor)
 ```
 ## Joint estimate model parameters by MCMC process
 ```r
