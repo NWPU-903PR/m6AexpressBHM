@@ -137,7 +137,7 @@ select_methylated_genes <- candidate_methylated_genes(group_methylation=Group_me
 Input_data <- c(group1_INPUT_BAM,group2_INPUT_BAM,group3_INPUT_BAM)
 gene_expression <- obtain_gene_expression(Input_data=Input_data, GTF_file=GENE_ANNO_GTF, 
                                            nthreads=20, isPairedEnd=F,
-                                           Group_label=c("Group1","Group2","Group3"),rep_num=c(2,2,2))
+                                           Group_label=c("Group1","Group2","Group3"),rep_num=c(3,3,3))
 ### Match expression and methylation genes
 gene_expr_methy <- match_expr_methy(gene_express_data=gene_expression,gene_methy=select_methylated_genes)
 ```
