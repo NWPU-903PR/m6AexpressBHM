@@ -129,7 +129,7 @@ Group2_methylevel_distdecay <- gene_methy_level_distdecay(mapLTX_peakinfor=Group
 Group_methylation <- list(Group1_methy=Group1_methylevel_distdecay,
                           Group2_methy=Group2_methylevel_distdecay,
                           Group3_methy=Group3_methylevel_distdecay)
-select_methylated_genes <- candidate_methylated_genes(group_methylation=Group_methylation,method="MAD")
+select_methylated_genes <- candidate_methylated_genes(group_methylation=Group_methylation,method="MAD",threshod=0.3)
 ```
 ### Match expression and methylation for candidate genes
 ```r 
