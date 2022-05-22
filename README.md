@@ -9,7 +9,14 @@ BiocManager::install(c("exomePeak2","DESeq2","Rsubread"))
 ```
 To obtain the longest transcript, user shoul install *m6ALogisticModel* R package
 ```r
+if (!requireNamespace("devtools", quietly = TRUE))
+    install.packages("devtools")
 devtools::install_github("ZhenWei10/m6ALogisticModel")
+```
+Now, the m6AexpressBHM package can be installed by the following R commands:
+```r
+devtools::install_github("NWPU-903PR/m6AexpressBHM")
+library(m6AexpressBHM)
 ```
 # Usage Example
 ## For each concerned group (e.g., each viral infection; one time-point bacterial infected), we first did the peak calling by *exomePeak2* R package.
