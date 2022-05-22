@@ -1,4 +1,4 @@
-initial_parameters <- function(gene_expre_methy,num_group,size_factor){
+obtain_initial_parameters <- function(gene_expre_methy,num_group,size_factor){
 
   gene_count_methy <- gene_expre_methy
   #gene_reads <- gene_count_methy[,2:((ncol(gene_count_methy)+1)/2)]
