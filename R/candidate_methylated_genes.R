@@ -1,4 +1,4 @@
-candidate_methylated_genes <- function(group_methylation,method){
+candidate_methylated_genes <- function(group_methylation,method,threshod){
 Group_num <- length(group_methylation)
 Rep_num <- vector()
 gene_names <- list()
@@ -40,7 +40,7 @@ if(method=="MAD"){
  }
  MAD <- median_sd
  names(MAD) <- rownames(within_group_methy)
- select_genes <- names(MAD)[which(MAD>0.3)]
+ select_genes <- names(MAD)[which(MAD>threshod)]
  candidate_gene_methy <- consis_genemethy[rownames(consis_genemethy)%in%select_genes,]
 }
 if(method=="DM"){
@@ -51,7 +51,7 @@ y <- consis_genemethy
 fit1 <- lmFit(y,design)
 fit1 <- eBayes(fit1)
 diff_result <- topTable(fit1,coef = 2,number = nrow(y),genelist = as.character(rownames(consis_genemethy)))
-DM_gene <- diff_result[diff_result$P.Value<0.05,]
+DM_gene <- diff_result[diff_result$P.Value<threshod,]
 DM_genename <- as.character(DM_gene$ID)
 candidate_gene_methy <-  consis_genemethy[rownames(consis_genemethy)%in%DM_genename,]
 }
@@ -71,7 +71,7 @@ for (i in 1:length(methy_level_infor)) {
   suppressMessages(fm1 <- lmerTest::lmer( methylevel  ~ time_point + ( 1 | Subject  ), methy_level_infor[[i]] ))
   suppressMessages(fm0 <- lmerTest::lmer( methylevel  ~ ( 1 | Subject  ), methy_level_infor[[i]] ))
   kr.h <- KRmodcomp(fm1, fm0)
-  if(unique(kr.h$test$p.value<0.05)){
+  if(unique(kr.h$test$p.value<threshod)){
     time_cor_gene_label[i] <- 1
   }else{
     time_cor_gene_label[i] <- 0
