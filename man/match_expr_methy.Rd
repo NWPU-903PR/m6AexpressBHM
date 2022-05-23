@@ -24,9 +24,10 @@ It will return a list containing two components:
 \item{gene_expr_methy}{a \code{data.frame} including the matched gene expression and methylation level for each sample in all concerned groups.}
 \item{size_factor}{a \code{numeric} vector specifying the sequencing depth size factors for each Input samples of all concerned groups.}
 }
-\dontrun{
+
 \examples{
+\dontrun{
 ### Match expression and methylation genes
-gene_expr_methy <- match_expr_methy(gene_express_data=gene_expression,gene_methy=select_methylated_genes)
+gene_expr_methy <- match_expr_methy(gene_express_data=gene_expression,                                                     gene_methy=select_methylated_genes)
 }
 }
