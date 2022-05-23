@@ -5,7 +5,7 @@ The m6AexpressBHM package is supported by R 4.1.0 or newer versions. First, you 
 ```r
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
-BiocManager::install(c("exomePeak2","DESeq2","Rsubread"))
+BiocManager::install(c("exomePeak2","DESeq2","Rsubread","GenomicScores"))
 ```
 To obtain the longest transcript, user shoul install *m6ALogisticModel* R package
 ```r
