@@ -26,8 +26,9 @@ This function will output the m6A peak sites informaiton in a \code{data.frame} 
 
 }
 
-\dontrun{
+
 \examples{
+\dontrun{
 Group1_peakinfor <- obtain_peakinfor(peak_infor_dir="./Group1_peakcalling")
 }
 }
