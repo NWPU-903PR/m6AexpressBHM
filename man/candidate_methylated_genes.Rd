@@ -29,13 +29,14 @@ A \code{numeric} specifies the threshod for different methods to select candidat
 It will report a \code{data.frame} including the methylation level of each candidate genes in multiple groups.
 }
 
-\dontrun{
+
 \examples{
+\dontrun{
 ###select candidate methylated genes with high variable methylation genes (e.g. MAD>0.3)
 Group_methylation <- list(Group1_methy=Group1_methylevel_distdecay,
                           Group2_methy=Group2_methylevel_distdecay,
                           Group3_methy=Group3_methylevel_distdecay)
 select_methylated_genes <- candidate_methylated_genes(group_methylation=Group_methylation,
                                                       method="MAD",threshod=0.3)
-
+}
 }
