@@ -54,8 +54,9 @@ The results generated include a \strong{BED} file and a \strong{CSV} table that 
 \seealso{
  See Also as \code{\link{?exomePeak2}}
 }
-\dontrun{
+
 \examples{
+\dontrun{
 library(exomePeak2)
 f1 <- "./group1_IP1.bam"
 f2 <- "./group1_IP2.bam"
