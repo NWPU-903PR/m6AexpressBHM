@@ -24,7 +24,9 @@ A \code{list} includes the information of peak sites mapped to the longest trans
 It will return a \code{data.frame} file including the sites of peak center for each peak.
 }
 
-\dontrun{\examples{
+\examples{
+\dontrun{
 Group1_peakcenter <- findpeakcenter(annotation_file=GENE_ANNO_GTF,
                                     maplongTX_peak=Group1_mappeak_LTX)
+}
 }
