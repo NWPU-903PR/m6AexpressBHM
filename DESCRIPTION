@@ -11,7 +11,7 @@ Encoding: UTF-8
 BuildVignettes: yes
 Depends: exomePeak2, DESeq2, reshape2, gdata, rtracklayer,stringr, Rsubread, stringi,Rcpp,RcppArmadillo,
          readr, SummarizedExperiment, aod, writexl,m6ALogisticModel,lmerTest,pbkrtest,glmmTMB,
-          ggplot2, grid, GenomicFeatures, GenomicRanges,AnnotationDbi, limma,doParallel,parallel,coda,extraDistr
+          ggplot2, grid, GenomicFeatures, GenomicRanges,AnnotationDbi, limma,doParallel,parallel,coda,extraDistr,
           GenomicAlignments,S4Vectors, scales,MLmetrics,robustbase,mvtnorm
 Suggests: BiocStyle
 biocViews: Sequencing, Alignment, DataImport,RNASeq,MethylSeq, Transcription, Coverage
