@@ -44,12 +44,12 @@ Joint_MCMC_estimate <- function(initial_parameters_infor,gene_expre_methy,
   beta_mean <- c(round(mean(intersecpt),3),0)
   beta_sd <- c(round(sd(intersecpt),3),round(sd(beta)*2,3))
   ##alpha prior
-  disp_fitted_value <- disp_fitted(raw_alpha=initial_alpha,gene_reads=gene_reads,numCoef=ncol(initial_beta),numSample=ncol(gene_reads))
-  disp_var_prior <- calculate_varPrior(raw_alpha=initial_alpha,dispFitted=disp_fitted_value,numCoef=ncol(initial_beta),numSample=ncol(gene_reads))
+  disp_fitted_value <- .disp_fitted(raw_alpha=initial_alpha,gene_reads=gene_reads,numCoef=ncol(initial_beta),numSample=ncol(gene_reads))
+  disp_var_prior <- .calculate_varPrior(raw_alpha=initial_alpha,dispFitted=disp_fitted_value,numCoef=ncol(initial_beta),numSample=ncol(gene_reads))
   disp_var_prior <- (disp_var_prior)
   log_disp_fit <- log(disp_fitted_value)
   ##sigma2 prior parameter
-  sigma2_prior <- sigma2_parior_param(sigma2=initial_sigma2)
+  sigma2_prior <- .sigma2_parior_param(sigma2=initial_sigma2)
   est_alpha <- sigma2_prior[1]
   est_beta <- sigma2_prior[2]
   converage_just <- matrix(data = NA,nrow = nrow(initial_beta),ncol = (ncol(initial_beta)+4))
@@ -103,7 +103,7 @@ Joint_MCMC_estimate <- function(initial_parameters_infor,gene_expre_methy,
                                n_beta=2,
                                n_sample=ncol(gene_reads),
                                it_num=it_num)
-    converage_justment <- converge_justment(parm_MHMC=allparm_MCMC,it_num=it_num,ar_lower=ar_lower,
+    converage_justment <- .converge_justment(parm_MHMC=allparm_MCMC,it_num=it_num,ar_lower=ar_lower,
                                             ar_up=ar_up,geweke_p=geweke_pvalue,sdtune0 = sdtune0,sdtune1=sdtune1,n_beta = ncol(initial_beta),prop_burn=prop_burn)
     
     
@@ -132,7 +132,7 @@ Joint_MCMC_estimate <- function(initial_parameters_infor,gene_expre_methy,
                                  n_beta=2,
                                  n_sample=ncol(gene_reads),
                                  it_num=it_num)
-      converage_justment <- converge_justment(parm_MHMC=allparm_MCMC,it_num=it_num,ar_lower=ar_lower,
+      converage_justment <- .converge_justment(parm_MHMC=allparm_MCMC,it_num=it_num,ar_lower=ar_lower,
                                               ar_up=ar_up,geweke_p=geweke_pvalue,sdtune0 = sdtune0,sdtune1=sdtune1,n_beta = ncol(initial_beta),prop_burn=prop_burn)
       
       filed_converge <- converage_justment$failed_converge
@@ -162,9 +162,9 @@ Joint_MCMC_estimate <- function(initial_parameters_infor,gene_expre_methy,
     select_parm <- (select_betas)
     select_alpha <- alpha_MCMC[i]
     select_b0s <- b0s_MCMC[i,] 
-    param_pvalue[i,] <- mcmc_pval(dat=select_parm,testlim=0,sided=1,ptype="z")
+    param_pvalue[i,] <- .mcmc_pval(dat=select_parm,testlim=0,sided=1,ptype="z")
     # beta1_BF[i] <- BF(dat=select_betas,betas_sd = beta_sd)
-    beta1_BF[i] <- BF(readscount=y,betas=betas_MCMC[i,],alpha = select_alpha,b0s=select_b0s,kX=kX,kZ=kZ,log_offset = log_offset)
+    beta1_BF[i] <- .BF(readscount=y,betas=betas_MCMC[i,],alpha = select_alpha,b0s=select_b0s,kX=kX,kZ=kZ,log_offset = log_offset)
     # beta1_pvalue[i] <- mcmc_pval(dat=select_parm)
     ##converage justment result
     converage_just[i,] <- converage_justment[[1]]
@@ -194,7 +194,7 @@ Joint_MCMC_estimate <- function(initial_parameters_infor,gene_expre_methy,
 
 ##parameter prior
 ##estimated sigma2 prior parameter given initial sigma2 value
-sigma2_parior_param <- function(sigma2){
+.sigma2_parior_param <- function(sigma2){
   sigma2_lower <- quantile(sigma2,0.05)
   sigma2_uper <- quantile(sigma2,0.95)
   sigma2s <- sigma2[which((sigma2>sigma2_lower)&(sigma2<sigma2_uper))]
@@ -206,7 +206,7 @@ sigma2_parior_param <- function(sigma2){
   return(prior_parm)
 }
 ####estimated alpha prior by DEseq2 method given initial alpha value
-disp_fitted <- function(raw_alpha,gene_reads,numCoef,numSample){
+.disp_fitted <- function(raw_alpha,gene_reads,numCoef,numSample){
   mean_count <- apply(gene_reads,1,mean)
   inve_meancount <- 1/mean_count
   alpha_lower <- quantile(raw_alpha,0.1)
@@ -220,7 +220,7 @@ disp_fitted <- function(raw_alpha,gene_reads,numCoef,numSample){
   return(alpha_fit)
 }
 
-calculate_varPrior <- function(raw_alpha, dispFitted, numSample,numCoef){
+.calculate_varPrior <- function(raw_alpha, dispFitted, numSample,numCoef){
   varlogdisp <- trigamma((numSample-numCoef)/2)
   logResidule = log(raw_alpha) - log(dispFitted)
   stdLogResidule = median(abs(logResidule - median(logResidule))) * 1.4826
@@ -230,7 +230,7 @@ calculate_varPrior <- function(raw_alpha, dispFitted, numSample,numCoef){
   return(varPrior)   
 }
 ##converge justment
-converge_justment <- function(parm_MHMC,it_num,ar_lower,ar_up,geweke_p,sdtune0, sdtune1,n_beta,prop_burn){
+.converge_justment <- function(parm_MHMC,it_num,ar_lower,ar_up,geweke_p,sdtune0, sdtune1,n_beta,prop_burn){
   betas_b0s_sample <- parm_MHMC$betas_b0s_est
   betas_sample <- (betas_b0s_sample[(it_num*prop_burn+1):it_num,1:n_beta])
   alpha_sample <- parm_MHMC$alphas[(it_num*prop_burn+1):it_num]
@@ -285,7 +285,7 @@ converge_justment <- function(parm_MHMC,it_num,ar_lower,ar_up,geweke_p,sdtune0, 
   return(converage_result)
 }
 #####MCMC p-value
-mcmc_pval <-
+.mcmc_pval <-
   function(dat,testlim=0,sided=1,ptype="z"){
     dat=data.frame(dat)
     lim=1/length(dat[,1])
@@ -308,7 +308,7 @@ mcmc_pval <-
     return(bps)
   }
 ##Bayese factor BF
-BF<- function(readscount,betas,alpha,b0s,kX,kZ,log_offset){
+.BF<- function(readscount,betas,alpha,b0s,kX,kZ,log_offset){
   M1_fixed_terms <- as.matrix(kX)%*%as.numeric(t(betas))
   M0_fixed_terms <- as.matrix(kX)%*%c(betas[1],0)
   random_terms <- as.matrix(kZ)%*%as.numeric(t(b0s))
