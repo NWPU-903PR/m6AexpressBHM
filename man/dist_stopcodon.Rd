@@ -27,8 +27,9 @@ The calculation of distance between the peak center and stop codon is based on t
 It will return a \code{data.frame} file specifing the distance of peak center to stop cond and the site of each peak center.
 }
 
-\dontrun{
+
 \examples{
+\dontrun{  
 Group1_peakcenter2stopcondon <- dist_stopcodon(target_peakcenter=Group1_peakcenter,
                                                 annotation_file=GENE_ANNO_GTF)
 }
