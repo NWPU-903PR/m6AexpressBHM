@@ -43,8 +43,9 @@ It will return a list containing two components:
 \item{gene_express}{a \code{matrix} including gene reads count in each sample of each concerned group}
 \item{size_factor}{a \code{numeric} vector specifying the sequencing depth size factors for each Input samples.}
 }
-\dontrun{
+
 \examples{
+\dontrun{
 ### obtain gene reads count from Input dataset in BAM format
 Input_data <- c(group1_INPUT_BAM,group2_INPUT_BAM,group3_INPUT_BAM)
 gene_expression <- obtain_gene_expression(Input_data=Input_data, 
