@@ -29,9 +29,11 @@ A list containing two components:
   \item{mapped_peakGRList}{peak sites mapped to the longest transicript in \code{GRangesList} format}
   \item{mapped_peankinfor }{peak sites information mapped to the longest transcirpt of each gene in \code{data.frame} format }
 }
-\dontrun{
+
 \examples{
+\dontrun{
 Group1_mappeak_LTX <- map_peak_longTX(filepath="./Group1_peakcalling",
                                      annotation_file=GENE_ANNO_GTF,
                                      peak_sites_infor=Group1_peakinfor)
+}
 }
