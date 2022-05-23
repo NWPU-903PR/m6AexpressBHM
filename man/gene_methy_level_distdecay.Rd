@@ -28,8 +28,9 @@ A \code{data.frame} specifing the distance of peak center to stop cond and the s
 \value{
 It will return a \code{data.frame} file containing the methylation level weighted by the distance of peak center to sop codon for each gene in each concerned sample.
 }
-\dontrun{
+
 \examples{
+\dontrun{
 load("./Group1_peakcalling/size_factor.Rdata")
 Group1_sizefactor <- size_factor
 Group1_methylevel_distdecay <- gene_methy_level_distdecay(mapLTX_peakinfor=Group1_mappeak_LTX,
